@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1001,
+        "name": "Mubarak Aldosari",
+        "salary": 100000
+    },
+    {
+        "id": 1002,
+        "name": "Ahmed Alshammari",
+        "salary": 80000
+    },
+    {
+        "id": 1003,
+        "name": "Abdullah Alshammari",
+        "salary": 60000
+    }
+]
