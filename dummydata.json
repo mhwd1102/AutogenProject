@@ -1,0 +1,20 @@
+[
+    {
+        "employee_id": 1001,
+        "name": "Mubarak Aldosari",
+        "vacation_balance": 5,
+        "salary": 100000
+    },
+    {
+        "employee_id": 1002,
+        "name": "Ahmed Alshammari",
+        "vacation_balance": 5,
+        "salary": 80000
+    },
+    {
+        "employee_id": 1003,
+        "name": "Abdullah Alshammari",
+        "vacation_balance": 20,
+        "salary": 60000
+    }
+]
