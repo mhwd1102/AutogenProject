@@ -32,9 +32,9 @@ class ChainlitAssistantAgent(AssistantAgent):
         request_reply: Optional[bool] = None,
         silent: Optional[bool] = False,
     ) -> bool:
-        if self.name == "HR_Assistant":
-            cl.run_sync(
-                
+        if self.name == "HR_Assistant" and isinstance(message, str) and message.startswith("NEXT: User_Proxy"):
+            message = message.replace("NEXT: User_Proxy", "")
+            cl.run_sync(  
                 cl.Message(
                     content=message,
                     author=self.name,
@@ -95,6 +95,8 @@ class ChainlitUserProxyAgent(UserProxyAgent):
             silent=silent,
         )
 
+        
+
 def makeAssistantAgent(name: str, system_message: str):
     return ChainlitAssistantAgent(
         name=name,
@@ -131,16 +133,16 @@ def makeUserProxyAgent(name: str, system_message: str, human_input_mode: str, ma
         llm_config=llm_config,
     )
 
-def makeGroupChat(agents: List[Agent], max_round: int):
+def makeGroupChat(agents: List[Agent], max_round: int, messages: List[str] = []):
     return autogen.GroupChat(
         agents=agents,
-        messages=[],
+        messages=messages,
         max_round=max_round
     )
 
 def makeManager(groupchat: GroupChat):
     return autogen.GroupChatManager(
-        groupchat=groupchat
+        groupchat=groupchat,
     )
     
     

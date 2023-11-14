@@ -27,8 +27,8 @@ async def on_message(message: cl.Message):
         userProxy = cl.user_session.get("User_Proxy")
         # hrSystem = cl.user_session.get("HR_System")
 
-        groupChat = agents.makeGroupChat(agents=[hrAssistant, hrManager, userProxy, hrAdmin], max_round=20,)
-        manager = agents.makeManager(groupchat=groupChat)
+        groupChat = agents.makeGroupChat(agents=[hrAssistant, hrManager, hrAdmin, userProxy], max_round=20)
+        manager = agents.makeManager(groupchat=groupChat,)
 
         print("GC messages: ", len(groupChat.messages))
 
@@ -36,9 +36,8 @@ async def on_message(message: cl.Message):
             # await cl.Message(content=f'Starting agents on task: {task}...').send()
             await cl.make_async(userProxy.initiate_chat)(manager, message=task)
         else:
-            if message.author == "HR_Assistant":
-                await cl.make_async(userProxy.send)(manager, message=task)
-            # await cl.make_async(userProxy.send)(manager, message=task)
+
+            await cl.make_async(userProxy.send)(manager, message=task)
 
     except Exception as e:
         print(e)
