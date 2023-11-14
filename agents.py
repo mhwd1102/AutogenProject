@@ -2,7 +2,7 @@ from typing import List, Dict, Union, Optional
 import autogen
 import chainlit as cl
 from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChat
-from functions import function_map
+from functions import function_map, functions
 
 
 config_list = autogen.config_list_from_json("OAI_CONFIG_LIST")
@@ -11,7 +11,8 @@ llm_config = {
     "config_list": config_list,
     "seed": 42, 
     "request_timeout": 120,
-    "temperature": 0
+    "temperature": 0,
+    "functions": functions,
 }
 
 async def ask_helper(func, **kwargs):
@@ -31,12 +32,14 @@ class ChainlitAssistantAgent(AssistantAgent):
         request_reply: Optional[bool] = None,
         silent: Optional[bool] = False,
     ) -> bool:
-        cl.run_sync(
-            cl.Message(
-                content=f'*Sending message to "{recipient.name}":*\n\n{message}',
-                author=self.name,
-            ).send()
-        )
+        if self.name == "HR_Assistant" and isinstance(message, str) and message.startswith("NEXT: User_Proxy"):
+            message = message.replace("NEXT: User_Proxy", "")
+            cl.run_sync(  
+                cl.Message(
+                    content=message,
+                    author=self.name,
+                ).send()
+            )
         super(ChainlitAssistantAgent, self).send(
             message=message,
             recipient=recipient,
@@ -79,12 +82,12 @@ class ChainlitUserProxyAgent(UserProxyAgent):
         request_reply: Optional[bool] = None,
         silent: Optional[bool] = False,
     ):
-        cl.run_sync(
-            cl.Message(
-                content=f'*Sending message to "{recipient.name}"*:\n\n{message}',
-                author=self.name,
-            ).send()
-        )
+        # cl.run_sync(
+        #     cl.Message(
+        #         content=f'*Sending message to "{recipient.name}"*:\n\n{message}',
+        #         author=self.name,
+        #     ).send()
+        # )
         super(ChainlitUserProxyAgent, self).send(
             message=message,
             recipient=recipient,
@@ -92,22 +95,22 @@ class ChainlitUserProxyAgent(UserProxyAgent):
             silent=silent,
         )
 
+        
+
 def makeAssistantAgent(name: str, system_message: str):
     return ChainlitAssistantAgent(
         name=name,
         llm_config=llm_config,
-        system_message=system_message
+        system_message=system_message,
+        human_input_mode="NEVER"
     )
 
-def makeAdminAgent(name: str, system_message: str):
-    return ChainlitUserProxyAgent(
+def makeAdminAssistantAgent(name: str, system_message: str):
+    return ChainlitAssistantAgent(
         name=name,
         llm_config=llm_config,
         system_message=system_message,
-        code_execution_config={
-            "work_dir": "HR",
-            "use_docker": False,
-        },
+        function_map=function_map,
         human_input_mode="NEVER"
     )
 
@@ -119,7 +122,6 @@ def makeUserProxyAgent(name: str, system_message: str, human_input_mode: str, ma
         human_input_mode=human_input_mode,
         max_consecutive_auto_reply=max_consecutive_auto_reply,
         llm_config=llm_config,
-        function_map=function_map,
         )
     is_termination_msg = lambda x: x.get("content", "").rstrip().endswith("TERMINATE")
     return ChainlitUserProxyAgent(
@@ -129,19 +131,18 @@ def makeUserProxyAgent(name: str, system_message: str, human_input_mode: str, ma
         max_consecutive_auto_reply=max_consecutive_auto_reply,
         is_termination_msg=is_termination_msg,
         llm_config=llm_config,
-        function_map=function_map,
     )
 
-def makeGroupChat(agents: List[Agent], max_round: int):
+def makeGroupChat(agents: List[Agent], max_round: int, messages: List[str] = []):
     return autogen.GroupChat(
         agents=agents,
-        messages=[],
+        messages=messages,
         max_round=max_round
     )
 
 def makeManager(groupchat: GroupChat):
     return autogen.GroupChatManager(
-        groupchat=groupchat
+        groupchat=groupchat,
     )
     
     

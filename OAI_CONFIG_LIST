@@ -1,6 +1,6 @@
 [
     {
-      "model": "gpt-4",
-      "api_key": "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"
+      "model": "gpt-4-1106-preview",
+      "api_key": ""
     }
 ]
