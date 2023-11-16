@@ -2,7 +2,7 @@
     {
         "employee_id": 1001,
         "name": "Mubarak Aldosari",
-        "vacation_balance": 4,
+        "vacation_balance": 3,
         "salary": 100000
     },
     {
@@ -14,7 +14,7 @@
     {
         "employee_id": 1003,
         "name": "Abdullah Alshammari",
-        "vacation_balance": 19,
+        "vacation_balance": 9,
         "salary": 60000
     }
 ]

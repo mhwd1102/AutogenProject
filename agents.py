@@ -1,16 +1,18 @@
 from typing import List, Dict, Union, Optional
 import autogen
 import chainlit as cl
-from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChat
+from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChat, oai
 from functions import function_map, functions
 
 
-config_list = autogen.config_list_from_json("OAI_CONFIG_LIST")
+config_list = autogen.config_list_from_json("./OAI_CONFIG_LIST")
+
+
 
 llm_config = {
     "config_list": config_list,
     "seed": 42, 
-    "request_timeout": 120,
+    "request_timeout": 60,
     "temperature": 0,
     "functions": functions,
 }
@@ -32,7 +34,7 @@ class ChainlitAssistantAgent(AssistantAgent):
         request_reply: Optional[bool] = None,
         silent: Optional[bool] = False,
     ) -> bool:
-        if self.name == "HR_Assistant" and isinstance(message, str) and message.startswith("NEXT: User_Proxy"):
+        if self.name == "HR_Assistant" and isinstance(message, str) and (message.startswith("NEXT: User_Proxy") or message.startswith("NEXT: User Proxy")):
             message = message.replace("NEXT: User_Proxy", "")
             cl.run_sync(  
                 cl.Message(
