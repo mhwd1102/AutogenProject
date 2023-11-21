@@ -5,14 +5,15 @@ from agent_profile import *
 @cl.on_chat_start
 async def on_chat_start():
     try:
-        cl.user_session.set("HR_Admin", HR_ADMIN)
+        # cl.user_session.set("HR_Admin", HR_ADMIN)
         cl.user_session.set("HR_Assistant", HR_ASSISTANT)
-        cl.user_session.set("HR_Manager", HR_MANAGER)
+        # cl.user_session.set("HR_Manager", HR_MANAGER)
         cl.user_session.set("User_Proxy", USER_PROXY)
         cl.user_session.set("HR_Planner", HR_PLANNER)
         # cl.user_session.set("HR_System", HR_SYSTEM)
 
         await cl.Message(content="Welcome to the company! I am your HR assistant. How can I help you?", author="HR_Assistant").send()
+        
     except Exception as e:
         print(e)
         pass
@@ -23,14 +24,14 @@ async def on_message(message: cl.Message):
     try:
         task = message.content
         # print(f'User: {task}')
-        hrAdmin = cl.user_session.get("HR_Admin")
+        # hrAdmin = cl.user_session.get("HR_Admin")
         hrAssistant = cl.user_session.get("HR_Assistant")
-        hrManager = cl.user_session.get("HR_Manager")
+        # hrManager = cl.user_session.get("HR_Manager")
         userProxy = cl.user_session.get("User_Proxy")
         hrPlanner = cl.user_session.get("HR_Planner")
         # hrSystem = cl.user_session.get("HR_System")
 
-        groupChat = agents.makeGroupChat(agents=[hrAssistant, hrManager, hrAdmin, userProxy, hrPlanner,], max_round=20,)
+        groupChat = agents.makeGroupChat(agents=[hrAssistant, userProxy, hrPlanner,], max_round=20,)
         manager = agents.makeManager(groupchat=groupChat,)
 
         print("GC messages: ", len(groupChat.messages))
@@ -39,7 +40,6 @@ async def on_message(message: cl.Message):
             # await cl.Message(content=f'Starting agents on task: {task}...').send()
             await cl.make_async(userProxy.initiate_chat)(manager, message=task)
         else:
-
             await cl.make_async(userProxy.send)(manager, message=task)
 
     except Exception as e:

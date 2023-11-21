@@ -1,15 +1,18 @@
 import json
 
-def give_vacation(employee_id, vacation_days):
+def decrease_vacation_days(employee_id, vacation_days):
     with open('dummydata.json', 'r+') as f:
         data = json.load(f)
         for i in data:
-            if i['employee_id'] == employee_id:
+            if i['employee_id'] == employee_id and i['vacation_balance'] >= vacation_days:
                 i['vacation_balance'] -= vacation_days
                 f.seek(0)
                 json.dump(data, f, indent=4)
                 f.truncate()
                 return f'Vacation balance updated successfully. Your new vacation balance is {i["vacation_balance"]}'
+            elif i['employee_id'] == employee_id and i['vacation_balance'] < vacation_days:
+                return f'Insufficient vacation balance. Your current vacation balance is {i["vacation_balance"]}'
+    return "Invalid employee id, please try again."
 
 def get_vacation_balance(employee_id):
     with open('dummydata.json', 'r') as f:
@@ -27,62 +30,86 @@ def validate_employee_id(employee_id):
                 return "Valid employee id."
     return "Invalid employee id, please try again."
 
+def get_employee_salary(employee_id):
+    with open('dummydata.json', 'r') as f:
+        data = json.load(f)
+        for i in data:
+            if i['employee_id'] == employee_id:
+                return f'The salary is {i["salary"]}'
+    return "Invalid employee id, please try again."
+
+def increase_salary(employee_id):
+    with open('dummydata.json', 'r+') as f:
+        data = json.load(f)
+        for i in data:
+            if i['employee_id'] == employee_id and i['salary'] < 10000:
+                i['salary'] += 2000
+                f.seek(0)
+                json.dump(data, f, indent=4)
+                f.truncate()
+                return f'Your new salary is {i["salary"]}'
+            elif i['employee_id'] == employee_id and i['salary'] >= 10000:
+                return f'Your salary is already above $10,000. Your current salary is {i["salary"]}'
+    return "Invalid employee id, please try again."
+
+
 def get_work_flow(code):
     if code == "CA9001":
         return """
-        This is the work flow for asking for Vacation request (code: CA9001):
-        1. HR Assistant receives the request and asks for the employee id if not givin.
-        2. HR Assistant sends the employee id to the HR Admin to check if it is valid using function validate_employee_id.
-        3. HR Admin sends the result to the HR Assistant.
-        3.1. If the employee id is not valid, HR Assistant asks the User Proxy for a valid employee id and go back to step 2.
-        3.2. If the employee id is valid, HR Assistant asks the User Proxy for the number of vacation days if not givin.
-        4. HR Assistant sends the number of vacation days to the HR Admin to check if the employee has enough vacation days using function get_vacation_balance.
-        4.1. If the employee does not have enough vacation days, HR Assistant tells the User proxy the employees balance and asks to change the its vacation days.
-        4.2. If the employee has enough vacation days, HR Assistant sends the request to the HR Manager to approve it.
-        5. HR Manager approve the request only if the empolyee has enough balance.
-        6. HR Assistant sends the result to the HR Admin to change the balance in the system using function give_vacation.
-        7. HR Admin sends the result to the HR Assistant if it is done or not.
-        8. HR Assistant sends the result to the User Proxy.
+        For Vacation Request (code: CA9001):
+        1. HR Assistant receives the request and prompts for the employee ID if not provided.
+        2. HR Assistant forwards the employee ID to the HR Planner to validate using 'validate_employee_id' function.
+        3. HR Planner communicates the validation result back to the HR Assistant.
+        3.1. If the employee ID is invalid, HR Assistant requests a valid one from the User Proxy and returns to step 2.
+        3.2. If the employee ID is valid, HR Assistant asks the User Proxy for the number of vacation days if not provided.
+        4. HR Assistant verifies the employee's vacation balance by sending the number of vacation days to the HR Planner using 'get_vacation_balance' function.
+        4.1. If the employee lacks sufficient vacation days, HR Assistant informs the User Proxy of the balance and requests a modification of the vacation days.
+        4.2. If enough vacation days are available, HR Assistant forwards the request to the HR Planner to adjust the balance in the system using 'decrease_vacation_days' function.
+        5. HR Planner communicates the outcome (whether completed or not) back to the HR Assistant.
+        6. HR Assistant relays the result to the User Proxy.
         """
     elif code == "CA9002":
         return """
-        This is the work flow for asking for Sick leave request (code: CA9002):
-        1. HR Assistant receives the request and asks for the employee id if not givin.
-        2. HR Assistant sends the employee id to the HR Admin to check if it is valid using function validate_employee_id.
-        3. HR Admin sends the result to the HR Assistant.
-        3.1. If the employee id is not valid, HR Assistant asks the User Proxy for a valid employee id and go back to step 2.
-        3.2. If the employee id is valid, HR Assistant send the request to the HR Manager to approve it.
-        4. HR Manager approve the request.
-        5. HR Assistant sends the approved request to the User Proxy and wish to get well soon.
+        For Sick Leave Request (code: CA9002):
+        1. HR Assistant receives the request and prompts for the employee ID if not provided.
+        2. HR Assistant forwards the employee ID to the HR Planner to validate using 'validate_employee_id' function.
+        3. HR Planner communicates the validation result back to the HR Assistant.
+        3.1. If the employee ID is invalid, HR Assistant requests a valid one from the User Proxy and returns to step 2.
+        3.2. If the employee ID is valid, HR Assistant approves the request and extends wishes for a speedy recovery.
         """
     elif code == "CA9003":
         return """
-        This is the work flow for asking for Raise in salary request (code: CA9003):
-        1. HR Assistant receives the request and asks for the employee id if not givin.
-        2. HR Assistant sends the employee id to the HR Admin to check if it is valid using function validate_employee_id.
-        3. HR Admin sends the result to the HR Assistant.
-        3.1. If the employee id is not valid, HR Assistant asks the User Proxy for a valid employee id and go back to step 2.
-        3.2. If the employee id is valid, HR Assistant sends to the User Proxy the employee's salary has increased by 200.
+        For Raise in Salary Request (code: CA9003):
+        1.HR Assistant receives the request and prompts for the employee ID if not provided.
+        2.HR Assistant forwards the employee ID to the HR Planner to validate using 'validate_employee_id' function.
+        3.HR Planner communicates the validation result back to the HR Assistant.
+        3.1. If the employee ID is invalid, HR Assistant requests a valid one from the User Proxy and returns to step 2.
+        3.2. If the employee ID is valid, check the salary of the employee using 'get_employee_salary' function.
+        4. If the salary is less than $10,000, HR Assistant forwards the request to the HR Planner to adjust the salary in the system using 'increase_salary' function.
+        5. HR Planner communicates the outcome (whether completed or not) back to the HR Assistant.
+        6. HR Assistant relays the result to the User Proxy.
         """
     elif code == "CA9004":
         return """
-        This is the work flow for asking for Document request (code: CA9004):
-        1. HR Assistant receives the request and asks for the employee id if not givin.
-        2. HR Assistant sends the employee id to the HR Admin to check if it is valid using function validate_employee_id.
-        3. HR Admin sends the result to the HR Assistant.
-        3.1. If the employee id is not valid, HR Assistant asks the User Proxy for a valid employee id and go back to step 2.
-        3.2. If the employee id is valid, HR Assistant tells the User Proxy that the document will be sent via email.
+        For Document Request (code: CA9004):
+        1. HR Assistant receives the request and prompts for the employee ID if not provided.
+        2. HR Assistant forwards the employee ID to the HR Planner to validate using 'validate_employee_id' function.
+        3. HR Planner communicates the validation result back to the HR Assistant.
+        3.1. If the employee ID is invalid, HR Assistant requests a valid one from the User Proxy and returns to step 2.
+        3.2. If the employee ID is valid, HR Assistant informs the User Proxy that the document will be sent via email.
         """
+    else:
+        return "Invalid code, please try again."
 
-give_vacation_func = {
-    "name": "give_vacation",
+decrease_vacation_days_func = {
+    "name": "decrease_vacation_days",
     "description": "This function is userful to give vacation to an employee.",
     "parameters": {
         "type": "object",
         "properties": {
             "employee_id": {
-                "type": "integer",
-                "description": "the employee id is a number with 4 digits.",
+                "type": "string",
+                "description": "the employee with the format 'EMP****'.",
             },
             "vacation_days": {
                 "type": "integer",
@@ -99,8 +126,8 @@ get_vacation_balance_func = {
         "type": "object",
         "properties": {
             "employee_id": {
-                "type": "integer",
-                "description": "the employee id is a number with 4 digits.",
+                "type": "string",
+                "description": "the employee id with the format 'EMP****'.",
             },
         },
         "required": ["employee_id"],
@@ -114,8 +141,38 @@ validate_employee_id_func = {
         "type": "object",
         "properties": {
             "employee_id": {
-                "type": "integer",
-                "description": "the employee id is a number with 4 digits.",
+                "type": "string",
+                "description": "the employee id with the format 'EMP****'.",
+            },
+        },
+        "required": ["employee_id"],
+    },
+}
+
+get_employee_salary_func = {
+    "name": "get_employee_salary",
+    "description": "This function is userful to get the salary of an employee.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "employee_id": {
+                "type": "string",
+                "description": "the employee id with the format 'EMP****'.",
+            },
+        },
+        "required": ["employee_id"],
+    },
+}
+
+increase_salary_func = {
+    "name": "increase_salary",
+    "description": "This function is userful to increase the salary of an employee.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "employee_id": {
+                "type": "string",
+                "description": "the employee id with the format 'EMP****'.",
             },
         },
         "required": ["employee_id"],
@@ -130,18 +187,20 @@ get_work_flow_func ={
         "properties": {
             "code": {
                 "type": "string",
-                "description": "the code of the request.",
+                "description": "the code of the request following this format CA9***.",
             },
         },
         "required": ["code"],
     },
 }
 
-functions = [get_vacation_balance_func, validate_employee_id_func, give_vacation_func, get_work_flow_func,]
+functions = [get_vacation_balance_func, validate_employee_id_func, decrease_vacation_days_func, get_work_flow_func, get_employee_salary_func, increase_salary_func]
 
 function_map = {
     "get_vacation_balance": get_vacation_balance,
     "validate_employee_id": validate_employee_id,
-    "give_vacation": give_vacation,
+    "decrease_vacation_days": decrease_vacation_days,
     "get_work_flow": get_work_flow,
+    "get_employee_salary": get_employee_salary,
+    "increase_salary": increase_salary,
 }

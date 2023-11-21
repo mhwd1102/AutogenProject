@@ -1,20 +1,20 @@
 [
     {
-        "employee_id": 1001,
+        "employee_id": "EMP1001",
         "name": "Mubarak Aldosari",
-        "vacation_balance": 3,
-        "salary": 100000
+        "vacation_balance": 17,
+        "salary": 10000
     },
     {
-        "employee_id": 1002,
+        "employee_id": "EMP1002",
         "name": "Ahmed Alshammari",
-        "vacation_balance": 4,
+        "vacation_balance": 8,
         "salary": 80000
     },
     {
-        "employee_id": 1003,
+        "employee_id": "EMP1003",
         "name": "Abdullah Alshammari",
-        "vacation_balance": 9,
+        "vacation_balance": 14,
         "salary": 60000
     }
 ]
