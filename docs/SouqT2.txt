@@ -1,0 +1,261 @@
+This is the base knowledge needed to understand the souq T2 products and services.
+
+Souq T2 is:
+A single platform that offers a suite of integrated and interconnected solutions from multiple sources. These solutions are highly efficient and meet the needs of successful individuals, entrepreneurs, and small and medium-sized businesses.
+Our products in souq T2 are: 
+1- register saudi local domain names.
+2- Microsoft 365 business pakages.
+3- SSL certificates.
+4- Web hosting.
+5- Coming Soon Page.
+6- Website building.
+You will find the details of each product below.
+=======================================================================
+Saudi domain:	
+Promote your national identity and register your trademark under the .sa extensions to ensure ownership of your own domain.
+Domains:
+.sa
+.com.sa
+.net.sa
+.org.sa
+.edu.sa
+.sch.sa
+.pub.sa
+.med.sa
+.السعودية
+.gov.sa cannot be sold to public for legal reasons.
+Price: 92 SAR per year
+FAQ:
+Why Saudi domain:
+National identity
+Business credibility
+Increase the chance of your website to appear in Saudi Arabia
+Privacy
+=======================================================================
+Microsoft 365 Business:
+Build professional relationships with external parties and stakeholders by representing your brand.
+Features:
+Flexible work: Allow your employees to work from anywhere, at any time, and provide them with a system to meet, communicate, and collaborate with each other.
+Automation: Increasing employee efficiency through applications that assist in automation and contain analysis results that contribute to facilitating work.
+Employee well-being: improved by developing healthy work habits based on the results of work and employee analysis. These habits can help employees focus, be more productive, and collaborate more effectively
+Protection: Reducing the risks of cyber attacks through integrated protection.
+Employee experience continuity: The ability for employees to have a consistent and seamless experience across all of the tools and systems they use in their work.
+Price: 
+Microsoft 365 Business Basic: 311 SAR per year
+Features
+{Web and mobile version of Word, Excel, Powerpoint, and Outlook only,
+Chat, call up to 300 attendees,
+1 TB of cloud storage per user,
+Business-class email,
+Manage customer appointments,
+Standard security,
+Anytime phone and web support}
+----------------------------------------
+Microsoft 365 Business Standard: 647 SAR per year
+Features
+{Everything in Business Basic, plus
+Desktop versions of Word, Excel, Powerpoint, and Outlook,
+Easily host webinars ,
+Attendee registration and reporting tools,
+Tools to create personalized documents and professional layouts}
+----------------------------------------
+Microsoft 365 Business Premium: 1139 SAR per year
+Features:
+{Everything in Business Standard, plus
+Advance security,
+Access and data control,
+Cyberthreat protection}
+----------------------------------------
+Exchange Outlook Plan 1: 207 SAR per year
+Feature
+{50 GB mailbox and messages up to 150 MB,
+Outlook on the web provides a premium browser-based experience,
+Focused Inbox makes it easy to track email that matters most,
+Automatically move old messages to an In-Place Archive}
+----------------------------------------
+Exchange Outlook Plan 2: 414 SAR per year
+Features
+{Everything in plan 1, plus
+100 GB mailbox and messages up to 150 MB,
+Built-in data loss prevention (DLP),
+Cloud Voicemail services with call answering, dial-in UI, and automated attendant}
+
+=======================================================================
+
+Website:
+Build a website from the ground up that is tailored to your specific needs and meets all of your business requirements.
+For more information Contact the sales team to share the requirements
+
+=======================================================================
+
+SSL Certificate:
+Get an SSL certificate to increase your security, comply with security standards to protect online businesses, and increase your customers' trust in you.
+Product list:
+Sectigo:
+Essential SSL 173 SAR per year
+{Single domain,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+PositiveSSL 108 SAR per year
+{Single domain,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+
+the difference between PositiveSSL and Essential SSL is in this link: https://sectigostore.com/page/positive-ssl-vs-essential-ssl/
+----------------------------------------
+PositiveSSL Multi-Domain 208 SAR per year
+{Multiple domain,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility,}
+----------------------------------------
+PositiveSSL Wildcard 597 SAR per year
+{Subdomains,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+Essential SSL Wildcard 633 SAR per year
+{Subdomain,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+PositiveSSL Multi Wildcard 1155 SAR per year
+{Multiple domain,
+With SAN,
+250 SAN Max,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-256,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+GoGetSSL:
+Domain SSL 86 SAR per year
+{Single domain,
+Domain name change allowed,
+Free reissue,
+SSL,
+IDN,
+256-bit encryption,
+SHA-261,
+RSA ,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+Multi-Domain SSL 194 SAR per year
+{Flex SSL,
+With SAN,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-261,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+Public IP SAN 194 SAR per year
+{Multiple domain,
+With SAN,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-261,
+RSA,
+Unlimited server license ,
+Smartphone compatibility}
+----------------------------------------
+Secure Domain SSL 270 SAR per year
+{Flex SSL,
+With SAN,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-261,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+----------------------------------------
+Wildcard SSL 431 SAR per year
+{Subdomain,
+Domain name change allowed,
+Free reissue,
+SSL checker,
+IDN,
+256-bit encryption,
+SHA-261,
+RSA,
+ECC,
+Unlimited server license,
+Smartphone compatibility}
+
+=======================================================================
+
+Coming Soon Page:
+Provide your future customers with your brand's contact information (phone numbers, email addresses, social media pages) from the moment you register your brand.
+Contact the sales team for more information
+
+=======================================================================
+
+Web Hosting
+Enjoy secure web hosting, locally or internationally, for your websites at the best prices and features.
+Contact the sales team for more information
+
+=======================================================================
+
+Support/Sales team
+Call us from 9:00am to 6:00pm at the number 920033339
+Email us at Support@souq.sa

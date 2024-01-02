@@ -1,0 +1,9 @@
+.css-1vm5bg2{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    overflow-y: auto;
+    direction: rtl;
+}

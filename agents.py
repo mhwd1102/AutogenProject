@@ -3,15 +3,15 @@ import autogen
 import chainlit as cl
 from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChat
 from functions import function_map, functions
+from autogen.agentchat.contrib.retrieve_assistant_agent import RetrieveAssistantAgent
+from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 
 config_list = autogen.config_list_from_json("OAI_CONFIG_LIST")
 
 llm_config = {
     "config_list": config_list,
     "seed": 42, 
-    "request_timeout": 60,
     "temperature": 0,
-    "functions": functions,
 }
 
 
@@ -151,38 +151,106 @@ class ChainlitUserProxyAgent(UserProxyAgent):
             silent=silent,
         )
 
+
+class ChainlitRetrivalUserProxyAgent(RetrieveUserProxyAgent):
+    """
+    Wrapper for AutoGens UserProxy Agent. Simplifies the UI by adding CL Actions. 
+    """
+    def get_human_input(self, prompt: str) -> str:
+        if self.last_message()["content"].endswith("TERMINATE"):
+            print("TERMINATE")
+            return 'exit'
+        if prompt.startswith(
+            "Provide feedback"
+        ):
+            reply = cl.run_sync(ask_helper(cl.AskUserMessage, content="",))
+
+            return reply["content"].strip()
+    def send(
+        self,
+        message: Union[Dict, str],
+        recipient: Agent,
+        request_reply: Optional[bool] = None,
+        silent: Optional[bool] = False,
+    ):
+        super(ChainlitRetrivalUserProxyAgent, self).send(
+            message=message,
+            recipient=recipient,
+            request_reply=request_reply,
+            silent=silent,
+        )
+
+class ChainlitRetrivalAssistantAgent(RetrieveAssistantAgent):
+    def send(
+        self,
+        message: Union[Dict, str],
+        recipient: Agent,
+        request_reply: Optional[bool] = None,
+        silent: Optional[bool] = False,
+    ) -> bool:
+        cl.run_sync(  
+            cl.Message(
+                content=message,
+                author=self.name,
+            ).send()
+        )
+        super(ChainlitRetrivalAssistantAgent, self).send(
+            message=message,
+            recipient=recipient,
+            request_reply=request_reply,
+            silent=silent,
+        )
         
 
-def makeAssistantAgent(name: str, system_message: str):
-    return ChainlitAssistantAgent(
+# def makeAssistantAgent(name: str, system_message: str):
+#     return ChainlitAssistantAgent(
+#         name=name,
+#         llm_config= llm_config,
+#         system_message=system_message,
+#         human_input_mode="NEVER"
+#     )
+
+# def makeAdminAssistantAgent(name: str, system_message: str):
+#     return ChainlitAssistantAgent(
+#         name=name,
+#         llm_config= llm_config,
+#         system_message=system_message,
+#         function_map=function_map,
+#         human_input_mode="NEVER"
+#     )
+
+# def makeUserProxyAgent(name: str, human_input_mode: str, max_consecutive_auto_reply: int):
+#     if human_input_mode != "TERMINATE":
+#         return ChainlitUserProxyAgent(
+#         name=name,
+#         human_input_mode=human_input_mode,
+#         max_consecutive_auto_reply=max_consecutive_auto_reply,
+#         )
+#     is_termination_msg = lambda x: x.get("content", "").rstrip().endswith("TERMINATE")
+#     return ChainlitUserProxyAgent(
+#         name=name,
+#         human_input_mode=human_input_mode,
+#         max_consecutive_auto_reply=max_consecutive_auto_reply,
+#         is_termination_msg=is_termination_msg,
+#     )
+        
+def makeRetrivalUserProxyAgent(name: str, human_input_mode: str, max_consecutive_auto_reply: int):
+    return ChainlitRetrivalUserProxyAgent(
+        name=name,
+        human_input_mode=human_input_mode,
+        max_consecutive_auto_reply=max_consecutive_auto_reply,
+        retrieve_config={
+            'task': "qa",
+            "docs_path": 'docs/SouqT2.txt'
+        }
+    )
+
+def makeRetrivalAssistantAgent(name: str, system_message: str):
+    return ChainlitRetrivalAssistantAgent(
         name=name,
         llm_config= llm_config,
         system_message=system_message,
         human_input_mode="NEVER"
-    )
-
-def makeAdminAssistantAgent(name: str, system_message: str):
-    return ChainlitAssistantAgent(
-        name=name,
-        llm_config= llm_config,
-        system_message=system_message,
-        function_map=function_map,
-        human_input_mode="NEVER"
-    )
-
-def makeUserProxyAgent(name: str, human_input_mode: str, max_consecutive_auto_reply: int):
-    if human_input_mode != "TERMINATE":
-        return ChainlitUserProxyAgent(
-        name=name,
-        human_input_mode=human_input_mode,
-        max_consecutive_auto_reply=max_consecutive_auto_reply,
-        )
-    is_termination_msg = lambda x: x.get("content", "").rstrip().endswith("TERMINATE")
-    return ChainlitUserProxyAgent(
-        name=name,
-        human_input_mode=human_input_mode,
-        max_consecutive_auto_reply=max_consecutive_auto_reply,
-        is_termination_msg=is_termination_msg,
     )
 
 def makeGroupChat(agents: List[Agent], max_round: int, messages: List[str] = []):
